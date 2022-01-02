@@ -5,6 +5,14 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 
+interface IComputeEmpWage {
+    public void addCompanyEmpWage(String company, int empRatePerhour,
+                                   int numOfWorkingDays, int maxHoursPerMonth);
+    public void computeEmpWage();
+    public int getTotalWage(String company);
+
+}
+
 public class EmpWage implements IComputeEmpWage {
 	public static final int IS_PART_TIME = 1;
 	public static final int IS_FULL_TIME = 2;
