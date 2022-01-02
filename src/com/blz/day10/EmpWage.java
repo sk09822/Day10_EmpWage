@@ -1,67 +1,68 @@
 package com.blz.day10;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Random;
 
-public class EmpWage {
+public class EmpWage implements IComputeEmpWage {
+	public static final int IS_PART_TIME = 1;
+	public static final int IS_FULL_TIME = 2;
 
-	public static final int IS_FULL_TIME = 1;
-	public static final int IS_PART_TIME = 2;
+	private int numOfCompany = 0;
+	private LinkedList<EmpWage> companyEmpWagesList;
+	private Map<String, EmpWage> companyToEmpWageMap;
 
-	private final String company;
-	private final int empRatePerHour;
-	private final int numOfWorkingDays;
-	private final int maxWorkingHoursPerMonth;
-	private int totalEmpWage;
-
-	public EmpWage(String company, int empRatePerHour, int numOfWorkingDays, int maxWorkingHoursPerMonth) {
-		this.company = company;
-		this.empRatePerHour = empRatePerHour;
-		this.numOfWorkingDays = numOfWorkingDays;
-		this.maxWorkingHoursPerMonth = maxWorkingHoursPerMonth;
+	public EmpWage() {
+		companyEmpWagesList = new LinkedList<>();
+		companyToEmpWageMap = new HashMap<>();
 	}
 
-	public void computeWage() {
-		int empHours = 0;
-		int total_empHrs = 0;
-		int totalWorkingDay = 0;
+	public void addCompanyEmpWage(String company, int empRatePerhour, int numOfWorkingDays, int maxHoursPerMonth) {
+		EmpWage companyEmpWage = new EmpWage(company, empRatePerhour, numOfWorkingDays, maxHoursPerMonth);
 
-		while (total_empHrs <= maxWorkingHoursPerMonth && totalWorkingDay < numOfWorkingDays) {
-			totalWorkingDay++;
+		companyEmpWagesList.add(companyEmpWage);
+		companyToEmpWageMap.put(company, companyEmpWage);
+	}
+
+	public int computeEmpWage(EmpWage companyEmpWage) {
+		// variables
+		int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0;
+		// computation
+		while (totalEmpHrs <= companyEmpWage.maxHoursPerMonth && totalWorkingDays < companyEmpWage.numOfWorkingDays) {
+			totalWorkingDays++;
 			int empCheck = (int) Math.floor(Math.random() * 10) % 3;
 			switch (empCheck) {
 			case IS_FULL_TIME:
-				empHours = 8;
-				System.out.println("Employee is Present");
+				empHrs = 8;
 				break;
 			case IS_PART_TIME:
-				System.out.println("Employee is Part Time");
-				empHours = 4;
+				empHrs = 4;
 				break;
 			default:
-				empHours = 0;
-
-				System.out.println("Employee is Absent");
+				empHrs = 0;
 			}
-			total_empHrs += empHours;
+			totalEmpHrs += empHrs;
 		}
-		totalEmpWage = total_empHrs * empRatePerHour;
+		return totalEmpHrs * companyEmpWage.empRatePerHour;
+	}
+
+	public void computeEmpWage() {
+		for (int i = 0; i < companyEmpWagesList.size(); i++) {
+			EmpWage companyEmpWage = companyEmpWagesList.get(i);
+			companyEmpWage.setTotalEmpwage(this.computeEmpWage(companyEmpWage));
+			System.out.println(companyEmpWage);
+		}
 	}
 
 	@Override
-	public String toString() {
-		return "Total Emp wage for company : " + company + " is " + totalEmpWage;
+	public int getTotalWage(String company) {
+		return companyToEmpWageMap.get(company).totalEmpWage;
 	}
 
 	public static void main(String[] args) {
-
-		
-		 EmpWage bridgeLabz = new EmpWage("BridgeLabz", 45, 30, 70);
-		 EmpWage infosys = new EmpWage("Infosys", 35, 45, 90);
-         bridgeLabz.computeWage();
-         System.out.println(bridgeLabz);
-         infosys.computeWage();
-         System.out.println(infosys);
-
+	        EmpWage emp = new EmpWage();
+	        emp.addCompanyEmpWage("BridgeLabz", 25, 20, 80);
+	        emp.addCompanyEmpWage("MasterCard", 30, 22, 100);
+	        emp.computeEmpWage();
 	}
-
-}
