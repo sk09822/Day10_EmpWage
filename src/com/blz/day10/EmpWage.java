@@ -17,7 +17,7 @@ class utilityEmpWage {
 	public int dailyWage;
 	public int hrs = 0;
 
-	public void present() {
+	public void present(String name, int wagePerHr, int maxWorkingDays, int maxWorkingHr) {
 		while (workingHr < maxWorkingHr && workingDays < maxWorkingDays) {
 			int check = rand.nextInt(3) + 1;
 			switch (check) {
@@ -35,17 +35,21 @@ class utilityEmpWage {
 			workingDays = workingDays + 1;
 		}
 		int salary = workingHr * wagePerHr;
-		System.out.println("the salary of month is : " + salary);
+		System.out.println("the salary of month is of " + name + " employee is " + salary);
 	}
 }
 
 public class EmpWage {
 
 	public static void main(String[] args) {
-		System.out.println("Welcome To Employee Wage Computation");
-		utilityEmpWage empWage = new utilityEmpWage();
-		empWage.present();
 
+		System.out.println("Welcome To Employee Wage Computation");
+		utilityEmpWage bridgrLabz = new utilityEmpWage();
+		utilityEmpWage airtel = new utilityEmpWage();
+		System.out.println("For bridgeLabz employee : ");
+		bridgrLabz.present("bridgeLabz", 20, 25, 180);
+		System.out.println("For airtel employee : ");
+		airtel.present("airtel", 25, 22, 150);
 	}
 
 }
