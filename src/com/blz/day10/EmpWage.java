@@ -10,25 +10,35 @@ class utilityEmpWage {
 	public int wagePerHr = 20;
 	public int fullDayHr = 8;
 	public int partTimeHr = 4;
+	public int maxWorkingDays = 20;
+	public int workingDays = 0;
+	public int maxWorkingHr = 100;
+	public int workingHr = 0;
 	public int dailyWage;
+	public int hrs = 0;
 
 	public void present() {
-		int check = rand.nextInt(3) + 1;
-		switch (check) {
-		case isPresent -> {
-			System.out.println("Employee is present.");
-			dailyWage = wagePerHr * fullDayHr;
-			System.out.println("Daily wage is : " + dailyWage);
+		while (workingHr < maxWorkingHr && workingDays < maxWorkingDays) {
+			int check = rand.nextInt(3) + 1;
+			switch (check) {
+			case isPresent -> {
+				System.out.println("Employee is present.");
+				hrs = fullDayHr;
+			}
+			case isPartTime -> {
+				System.out.println("Employee is present part time.");
+				hrs = partTimeHr;
+			}
+			case isAbsent -> hrs = 0;
+			}
+			workingHr = workingHr + hrs;
+			workingDays = workingDays + 1;
 		}
-		case isPartTime -> {
-			System.out.println("Employee is present part time.");
-			dailyWage = wagePerHr * partTimeHr;
-			System.out.println("Daily wage is : " + dailyWage);
-		}
-		case isAbsent -> System.out.println("Employee is absent.");
-		}
+		int salary = workingHr * wagePerHr;
+		System.out.println("the salary of month is : " + salary);
 	}
 }
+
 
 public class EmpWage {
 
