@@ -63,6 +63,6 @@ public class EmpWage implements IComputeEmpWage {
 	public static void main(String[] args) {
 	        EmpWage emp = new EmpWage();
 	        emp.addCompanyEmpWage("BridgeLabz", 25, 20, 80);
-	        emp.addCompanyEmpWage("MasterCard", 30, 22, 100);
+	        emp.addCompanyEmpWage("Infosys", 30, 22, 100);
 	        emp.computeEmpWage();
 	}
